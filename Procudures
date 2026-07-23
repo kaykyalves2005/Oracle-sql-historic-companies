@@ -1,0 +1,228 @@
+   PROCEDURES DO PROJETO
+   Banco de Dados: Empresas Mais Antigas do Mundo
+   Oracle SQL / PL-SQL
+
+
+-- =====================================================
+-- PROCEDURE 1
+-- Cadastrar uma nova empresa
+-- =====================================================
+
+CREATE OR REPLACE PROCEDURE PR_CADASTRAR_EMPRESA
+(
+    P_ID_EMPRESA NUMBER,
+    P_NOME VARCHAR2,
+    P_ANO_FUNDACAO NUMBER,
+    P_FUNDADOR VARCHAR2,
+    P_STATUS VARCHAR2,
+    P_FUNCIONARIOS NUMBER,
+    P_SITE VARCHAR2,
+    P_DESCRICAO VARCHAR2,
+    P_ID_CIDADE NUMBER,
+    P_ID_SETOR NUMBER
+)
+IS
+BEGIN
+
+    INSERT INTO EMPRESAS
+    VALUES
+    (
+        P_ID_EMPRESA,
+        P_NOME,
+        P_ANO_FUNDACAO,
+        P_FUNDADOR,
+        P_STATUS,
+        P_FUNCIONARIOS,
+        P_SITE,
+        P_DESCRICAO,
+        P_ID_CIDADE,
+        P_ID_SETOR
+    );
+
+    COMMIT;
+
+END;
+/
+
+-- =====================================================
+-- PROCEDURE 2
+-- Atualizar funcionários 
+-- =====================================================
+
+CREATE OR REPLACE PROCEDURE PR_ATUALIZAR_FUNCIONARIOS
+(
+    P_ID_EMPRESA NUMBER,
+    P_NOVO_TOTAL NUMBER
+)
+IS
+
+BEGIN
+
+    UPDATE EMPRESAS
+    SET FUNCIONARIOS = P_NOVO_TOTAL
+    WHERE ID_EMPRESA = P_ID_EMPRESA;
+
+    COMMIT;
+
+END;
+/
+
+-- =====================================================
+-- PROCEDURE 3
+-- Alterar status da empresa 
+-- =====================================================
+
+CREATE OR REPLACE PROCEDURE PR_ALTERAR_STATUS_EMPRESA
+(
+    P_ID_EMPRESA NUMBER,
+    P_STATUS VARCHAR2
+)
+
+IS
+
+BEGIN
+
+UPDATE EMPRESAS
+SET STATUS = P_STATUS
+WHERE ID_EMPRESA = P_ID_EMPRESA;
+
+COMMIT;
+
+END;
+/
+
+-- =====================================================
+-- PROCEDURE 4
+-- Listar empresas por país 
+-- =====================================================
+
+CREATE OR REPLACE PROCEDURE PR_EMPRESAS_POR_PAIS
+(
+    P_ID_PAIS NUMBER
+)
+
+IS
+
+BEGIN
+
+FOR EMP IN
+(
+SELECT 
+    E.NOME,
+    E.ANO_FUNDACAO,
+    P.NOME AS PAIS
+FROM EMPRESAS E
+JOIN CIDADES C
+ON E.ID_CIDADE = C.ID_CIDADE
+JOIN PAISES P
+ON C.ID_PAIS = P.ID_PAIS
+WHERE P.ID_PAIS = P_ID_PAIS
+)
+
+LOOP
+
+DBMS_OUTPUT.PUT_LINE(
+'Empresa: ' || EMP.NOME ||
+' | Fundação: ' || EMP.ANO_FUNDACAO ||
+' | País: ' || EMP.PAIS
+);
+
+END LOOP;
+
+END;
+/
+
+-- =====================================================
+-- PROCEDURE 5
+-- Registrar prêmio para empresa 
+-- =====================================================
+
+CREATE OR REPLACE PROCEDURE PR_ADICIONAR_PREMIO
+(
+    P_ID_EMPRESA NUMBER,
+    P_ID_PREMIO NUMBER
+)
+
+IS
+
+BEGIN
+
+INSERT INTO EMPRESA_PREMIO
+VALUES
+(
+P_ID_EMPRESA,
+P_ID_PREMIO
+);
+
+COMMIT;
+
+END;
+/
+
+-- =====================================================
+-- PROCEDURE 6
+-- Excluir empresa 
+-- =====================================================
+
+CREATE OR REPLACE PROCEDURE PR_EXCLUIR_EMPRESA
+(
+    P_ID_EMPRESA NUMBER
+)
+
+IS
+
+BEGIN
+
+DELETE FROM EMPRESA_PREMIO
+WHERE ID_EMPRESA = P_ID_EMPRESA;
+
+
+DELETE FROM PRODUTOS_SERVICOS
+WHERE ID_EMPRESA = P_ID_EMPRESA;
+
+
+DELETE FROM EMPRESAS
+WHERE ID_EMPRESA = P_ID_EMPRESA;
+
+
+COMMIT;
+
+END;
+/
+
+-- =====================================================
+-- PROCEDURE 7
+-- Relatório de empresas antigas 
+-- =====================================================
+
+CREATE OR REPLACE PROCEDURE PR_EMPRESAS_ANTES_ANO
+(
+    P_ANO NUMBER
+)
+
+IS
+
+BEGIN
+
+FOR EMP IN
+(
+SELECT
+NOME,
+ANO_FUNDACAO
+FROM EMPRESAS
+WHERE ANO_FUNDACAO < P_ANO
+ORDER BY ANO_FUNDACAO
+)
+
+LOOP
+
+DBMS_OUTPUT.PUT_LINE(
+EMP.NOME || 
+' - Fundada em: ' ||
+EMP.ANO_FUNDACAO
+);
+
+END LOOP;
+
+END;
+/
