@@ -1,0 +1,335 @@
+
+   FUNCTIONS DO PROJETO
+   Banco de Dados: Empresas Mais Antigas do Mundo
+   Oracle SQL / PL-SQL
+
+
+-- =====================================================
+-- FUNCTION 1
+-- Retorna a idade da empresa
+-- =====================================================
+
+CREATE OR REPLACE FUNCTION FN_IDADE_EMPRESA
+(
+    P_ID_EMPRESA NUMBER
+)
+RETURN NUMBER
+
+IS
+
+V_ANO NUMBER;
+
+BEGIN
+
+SELECT ANO_FUNDACAO
+INTO V_ANO
+FROM EMPRESAS
+WHERE ID_EMPRESA = P_ID_EMPRESA;
+
+
+RETURN EXTRACT(YEAR FROM SYSDATE) - V_ANO;
+
+
+END;
+/
+
+
+-- =====================================================
+-- FUNCTION 2
+-- Retornar o país da empresa
+-- =====================================================
+
+CREATE OR REPLACE FUNCTION FN_PAIS_EMPRESA
+(
+    P_ID_EMPRESA NUMBER
+)
+
+RETURN VARCHAR2
+
+IS
+
+V_PAIS VARCHAR2(100);
+
+
+BEGIN
+
+
+SELECT P.NOME
+INTO V_PAIS
+
+FROM EMPRESAS E
+
+JOIN CIDADES C
+ON E.ID_CIDADE = C.ID_CIDADE
+
+JOIN PAISES P
+ON C.ID_PAIS = P.ID_PAIS
+
+WHERE E.ID_EMPRESA = P_ID_EMPRESA;
+
+
+RETURN V_PAIS;
+
+
+END;
+/
+
+-- =====================================================
+-- FUNCTION 3
+-- Retornar o setor da empresa
+-- =====================================================
+
+CREATE OR REPLACE FUNCTION FN_SETOR_EMPRESA
+(
+    P_ID_EMPRESA NUMBER
+)
+
+RETURN VARCHAR2
+
+IS
+
+V_SETOR VARCHAR2(100);
+
+
+BEGIN
+
+
+SELECT S.NOME
+
+INTO V_SETOR
+
+FROM EMPRESAS E
+
+JOIN SETORES S
+ON E.ID_SETOR = S.ID_SETOR
+
+WHERE E.ID_EMPRESA = P_ID_EMPRESA;
+
+
+RETURN V_SETOR;
+
+
+END;
+/
+
+-- =====================================================
+-- FUNCTION 4
+-- Contar quantidade de empresas por país
+-- =====================================================
+
+CREATE OR REPLACE FUNCTION FN_TOTAL_EMPRESAS_PAIS
+(
+    P_ID_PAIS NUMBER
+)
+
+RETURN NUMBER
+
+IS
+
+V_TOTAL NUMBER;
+
+
+BEGIN
+
+
+SELECT COUNT(*)
+
+INTO V_TOTAL
+
+FROM EMPRESAS E
+
+JOIN CIDADES C
+ON E.ID_CIDADE = C.ID_CIDADE
+
+WHERE C.ID_PAIS = P_ID_PAIS;
+
+
+RETURN V_TOTAL;
+
+
+END;
+/
+
+
+-- =====================================================
+-- FUNCTION 5
+-- Verificar se a empresa é centenária
+-- =====================================================
+
+CREATE OR REPLACE FUNCTION FN_EMPRESA_CENTENARIA
+(
+    P_ID_EMPRESA NUMBER
+)
+
+RETURN VARCHAR2
+
+IS
+
+V_IDADE NUMBER;
+
+
+BEGIN
+
+
+SELECT 
+EXTRACT(YEAR FROM SYSDATE) - ANO_FUNDACAO
+
+INTO V_IDADE
+
+FROM EMPRESAS
+
+WHERE ID_EMPRESA = P_ID_EMPRESA;
+
+
+
+IF V_IDADE >= 100 THEN
+
+RETURN 'SIM';
+
+ELSE
+
+RETURN 'NAO';
+
+END IF;
+
+
+END;
+/
+
+
+-- =====================================================
+-- FUNCTION 6
+-- Retornar quantidade de funcionários
+-- =====================================================
+
+CREATE OR REPLACE FUNCTION FN_FUNCIONARIOS_EMPRESA
+(
+    P_ID_EMPRESA NUMBER
+)
+
+RETURN NUMBER
+
+IS
+
+V_FUNC NUMBER;
+
+
+BEGIN
+
+
+SELECT FUNCIONARIOS
+
+INTO V_FUNC
+
+FROM EMPRESAS
+
+WHERE ID_EMPRESA = P_ID_EMPRESA;
+
+
+RETURN V_FUNC;
+
+
+END;
+/
+
+
+-- =====================================================
+-- FUNCTION 7
+-- Retornar descrição completa da empresa
+-- =====================================================
+
+CREATE OR REPLACE FUNCTION FN_RESUMO_EMPRESA
+(
+    P_ID_EMPRESA NUMBER
+)
+
+RETURN VARCHAR2
+
+IS
+
+V_RESULTADO VARCHAR2(500);
+
+
+BEGIN
+
+
+SELECT
+
+'NOME: ' || E.NOME ||
+' | Fundação: ' || E.ANO_FUNDACAO ||
+' | Fundador: ' || E.FUNDADOR ||
+' | Setor: ' || S.NOME
+
+INTO V_RESULTADO
+
+
+FROM EMPRESAS E
+
+JOIN SETORES S
+ON E.ID_SETOR = S.ID_SETOR
+
+WHERE E.ID_EMPRESA = P_ID_EMPRESA;
+
+
+
+RETURN V_RESULTADO;
+
+
+END;
+/
+
+-- =====================================================
+-- FUNCTION 8
+-- Classificação histórica da empresa
+-- =====================================================
+
+CREATE OR REPLACE FUNCTION FN_CLASSIFICACAO_HISTORICA
+(
+    P_ID_EMPRESA NUMBER
+)
+
+RETURN VARCHAR2
+
+IS
+
+V_ANO NUMBER;
+
+
+BEGIN
+
+
+SELECT ANO_FUNDACAO
+
+INTO V_ANO
+
+FROM EMPRESAS
+
+WHERE ID_EMPRESA = P_ID_EMPRESA;
+
+
+
+IF V_ANO < 1000 THEN
+
+RETURN 'EMPRESA MILENAR';
+
+
+ELSIF V_ANO < 1500 THEN
+
+RETURN 'EMPRESA MEDIEVAL';
+
+
+ELSIF V_ANO < 1900 THEN
+
+RETURN 'EMPRESA HISTORICA';
+
+
+ELSE
+
+RETURN 'EMPRESA MODERNA';
+
+
+END IF;
+
+
+END;
+/
