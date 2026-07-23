@@ -1,0 +1,29 @@
+oracle-sql-historic-companies/
+│
+├── README.md
+├── LICENSE
+├── .gitignore
+│
+├── sql/
+│   ├── 01_create_tables.sql
+│   ├── 02_insert_continentes.sql
+│   ├── 03_insert_paises.sql
+│   ├── 04_insert_cidades.sql
+│   ├── 05_insert_setores.sql
+│   ├── 06_insert_empresas.sql
+│   ├── 07_insert_premios.sql
+│   ├── 08_insert_produtos_servicos.sql
+│   ├── 09_insert_empresa_premio.sql
+│   ├── 10_views.sql
+│   ├── 11_procedures.sql
+│   ├── 12_functions.sql
+│   ├── 13_triggers.sql
+│   └── 14_consultas.sql
+│
+├── docs/
+│   ├── DER.png
+│   ├── ModeloRelacional.png
+│   └── Projeto.pdf
+│
+└── images/
+    └── banco.png
