@@ -1,0 +1,309 @@
+
+   QUERIES DO PROJETO
+   Banco de Dados: Empresas Mais Antigas do Mundo
+   Oracle SQL
+
+
+
+
+-- =====================================================
+-- QUERY 1
+-- Listar todas as empresas cadastradas
+-- =====================================================
+
+SELECT *
+FROM EMPRESAS;
+
+
+
+-- =====================================================
+-- QUERY 2
+-- Listar empresas ordenadas pela data de fundação
+-- Da mais antiga para a mais nova
+-- =====================================================
+
+SELECT
+    NOME,
+    ANO_FUNDACAO,
+    FUNDADOR
+FROM EMPRESAS
+ORDER BY ANO_FUNDACAO;
+
+
+
+-- =====================================================
+-- QUERY 3
+-- Buscar empresas fundadas antes do ano 1000
+-- =====================================================
+
+SELECT
+    NOME,
+    ANO_FUNDACAO,
+    FUNDADOR
+FROM EMPRESAS
+WHERE ANO_FUNDACAO < 1000;
+
+
+
+-- =====================================================
+-- QUERY 4
+-- Listar empresas e seus países
+-- =====================================================
+
+SELECT
+    E.NOME AS EMPRESA,
+    P.NOME AS PAIS
+FROM EMPRESAS E
+JOIN CIDADES C
+ON E.ID_CIDADE = C.ID_CIDADE
+JOIN PAISES P
+ON C.ID_PAIS = P.ID_PAIS;
+
+
+
+-- =====================================================
+-- QUERY 5
+-- Listar empresas com seus setores
+-- =====================================================
+
+SELECT
+    E.NOME AS EMPRESA,
+    S.NOME AS SETOR
+FROM EMPRESAS E
+JOIN SETORES S
+ON E.ID_SETOR = S.ID_SETOR;
+
+
+
+-- =====================================================
+-- QUERY 6
+-- Mostrar produtos e serviços de cada empresa
+-- =====================================================
+
+SELECT
+    E.NOME AS EMPRESA,
+    PS.NOME AS PRODUTO_SERVICO,
+    PS.TIPO
+FROM EMPRESAS E
+JOIN PRODUTOS_SERVICOS PS
+ON E.ID_EMPRESA = PS.ID_EMPRESA;
+
+
+
+-- =====================================================
+-- QUERY 7
+-- Mostrar empresas que possuem prêmios
+-- =====================================================
+
+SELECT
+    E.NOME AS EMPRESA,
+    PR.NOME AS PREMIO,
+    PR.ANO AS ANO_PREMIO
+FROM EMPRESAS E
+JOIN EMPRESA_PREMIO EP
+ON E.ID_EMPRESA = EP.ID_EMPRESA
+JOIN PREMIOS PR
+ON EP.ID_PREMIO = PR.ID_PREMIO;
+
+
+
+-- =====================================================
+-- QUERY 8
+-- Quantidade de empresas por país
+-- =====================================================
+
+SELECT
+    P.NOME AS PAIS,
+    COUNT(E.ID_EMPRESA) AS TOTAL_EMPRESAS
+FROM PAISES P
+JOIN CIDADES C
+ON P.ID_PAIS = C.ID_PAIS
+JOIN EMPRESAS E
+ON C.ID_CIDADE = E.ID_CIDADE
+GROUP BY P.NOME;
+
+
+
+-- =====================================================
+-- QUERY 9
+-- Quantidade de empresas por setor
+-- =====================================================
+
+SELECT
+    S.NOME AS SETOR,
+    COUNT(E.ID_EMPRESA) AS TOTAL
+FROM SETORES S
+JOIN EMPRESAS E
+ON S.ID_SETOR = E.ID_SETOR
+GROUP BY S.NOME;
+
+
+
+-- =====================================================
+-- QUERY 10
+-- Média de funcionários das empresas
+-- =====================================================
+
+SELECT
+    ROUND(AVG(FUNCIONARIOS),2)
+    AS MEDIA_FUNCIONARIOS
+FROM EMPRESAS;
+
+
+
+-- =====================================================
+-- QUERY 11
+-- Empresas com mais de 10 mil funcionários
+-- =====================================================
+
+SELECT
+    NOME,
+    FUNCIONARIOS
+FROM EMPRESAS
+WHERE FUNCIONARIOS > 10000
+ORDER BY FUNCIONARIOS DESC;
+
+
+
+-- =====================================================
+-- QUERY 12
+-- Empresa mais antiga cadastrada
+-- =====================================================
+
+SELECT
+    NOME,
+    ANO_FUNDACAO
+FROM EMPRESAS
+WHERE ANO_FUNDACAO =
+(
+    SELECT MIN(ANO_FUNDACAO)
+    FROM EMPRESAS
+);
+
+
+
+-- =====================================================
+-- QUERY 13
+-- Empresa mais recente cadastrada
+-- =====================================================
+
+SELECT
+    NOME,
+    ANO_FUNDACAO
+FROM EMPRESAS
+WHERE ANO_FUNDACAO =
+(
+    SELECT MAX(ANO_FUNDACAO)
+    FROM EMPRESAS
+);
+
+
+
+-- =====================================================
+-- QUERY 14
+-- Empresas por continente
+-- =====================================================
+
+SELECT
+    CONT.NOME AS CONTINENTE,
+    COUNT(E.ID_EMPRESA) AS TOTAL
+FROM EMPRESAS E
+JOIN CIDADES C
+ON E.ID_CIDADE = C.ID_CIDADE
+JOIN PAISES P
+ON C.ID_PAIS = P.ID_PAIS
+JOIN CONTINENTES CONT
+ON P.ID_CONTINENTE = CONT.ID_CONTINENTE
+GROUP BY CONT.NOME;
+
+
+
+-- =====================================================
+-- QUERY 15
+-- Empresas que possuem mais de um prêmio
+-- =====================================================
+
+SELECT
+    E.NOME,
+    COUNT(EP.ID_PREMIO) AS TOTAL_PREMIOS
+FROM EMPRESAS E
+JOIN EMPRESA_PREMIO EP
+ON E.ID_EMPRESA = EP.ID_EMPRESA
+GROUP BY E.NOME
+HAVING COUNT(EP.ID_PREMIO) > 1;
+
+
+
+-- =====================================================
+-- QUERY 16
+-- Top 5 empresas mais antigas
+-- =====================================================
+
+SELECT
+    NOME,
+    ANO_FUNDACAO
+FROM EMPRESAS
+ORDER BY ANO_FUNDACAO
+FETCH FIRST 5 ROWS ONLY;
+
+
+
+-- =====================================================
+-- QUERY 17
+-- Empresas de tecnologia
+-- =====================================================
+
+SELECT
+    E.NOME,
+    S.NOME AS SETOR
+FROM EMPRESAS E
+JOIN SETORES S
+ON E.ID_SETOR = S.ID_SETOR
+WHERE S.NOME LIKE '%Tecnologia%';
+
+
+
+-- =====================================================
+-- QUERY 18
+-- Empresas que possuem descrição cadastrada
+-- =====================================================
+
+SELECT
+    NOME,
+    DESCRICAO
+FROM EMPRESAS
+WHERE DESCRICAO IS NOT NULL;
+
+
+
+-- =====================================================
+-- QUERY 19
+-- Quantidade total de empresas
+-- =====================================================
+
+SELECT
+COUNT(*) AS TOTAL_EMPRESAS
+FROM EMPRESAS;
+
+
+
+-- =====================================================
+-- QUERY 20
+-- Relatório completo das empresas
+-- =====================================================
+
+SELECT
+    E.NOME AS EMPRESA,
+    E.ANO_FUNDACAO,
+    E.FUNDADOR,
+    S.NOME AS SETOR,
+    C.NOME AS CIDADE,
+    P.NOME AS PAIS
+FROM EMPRESAS E
+JOIN SETORES S
+ON E.ID_SETOR = S.ID_SETOR
+JOIN CIDADES C
+ON E.ID_CIDADE = C.ID_CIDADE
+JOIN PAISES P
+ON C.ID_PAIS = P.ID_PAIS
+ORDER BY E.ANO_FUNDACAO;
