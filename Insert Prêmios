@@ -1,0 +1,12 @@
+INSERT INTO PREMIOS VALUES (1,'Guinness World Records',2001,'Guinness World Records');
+INSERT INTO PREMIOS VALUES (2,'Patrimônio Cultural do Japão',1996,'Governo do Japão');
+INSERT INTO PREMIOS VALUES (3,'Michelin Stars',2020,'Guia Michelin');
+INSERT INTO PREMIOS VALUES (4,'Marca Histórica da Europa',2015,'União Europeia');
+INSERT INTO PREMIOS VALUES (5,'Empresa Centenária',2010,'World Heritage Business');
+INSERT INTO PREMIOS VALUES (6,'Prêmio de Inovação',2018,'International Business Awards');
+INSERT INTO PREMIOS VALUES (7,'Patrimônio Histórico Nacional',2005,'UNESCO');
+INSERT INTO PREMIOS VALUES (8,'Excelência em Hotelaria',2019,'World Travel Awards');
+INSERT INTO PREMIOS VALUES (9,'Empresa Sustentável',2021,'Green Business Council');
+INSERT INTO PREMIOS VALUES (10,'Melhor Empresa do Setor',2022,'Global Business Awards');
+
+COMMIT;
