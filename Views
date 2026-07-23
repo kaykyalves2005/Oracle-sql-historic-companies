@@ -1,0 +1,163 @@
+
+ VIEWS DO PROJETO
+ Banco de Dados: Empresas Mais Antigas do Mundo
+ Oracle SQL
+
+
+-- =====================================================
+-- VIEW 1
+-- Lista completa das empresas com sua localização
+-- =====================================================
+
+CREATE OR REPLACE VIEW VW_EMPRESAS_LOCALIZACAO AS
+SELECT 
+    E.ID_EMPRESA,
+    E.NOME AS EMPRESA,
+    E.ANO_FUNDACAO,
+    E.FUNDADOR,
+    E.STATUS,
+    C.NOME AS CIDADE,
+    P.NOME AS PAIS,
+    CONT.NOME AS CONTINENTE
+FROM EMPRESAS E
+JOIN CIDADES C
+    ON E.ID_CIDADE = C.ID_CIDADE
+JOIN PAISES P
+    ON C.ID_PAIS = P.ID_PAIS
+JOIN CONTINENTES CONT
+    ON P.ID_CONTINENTE = CONT.ID_CONTINENTE;
+
+
+
+-- =====================================================
+-- VIEW 2
+-- Empresas organizadas por setor
+-- =====================================================
+
+CREATE OR REPLACE VIEW VW_EMPRESAS_SETOR AS
+SELECT
+    E.ID_EMPRESA,
+    E.NOME AS EMPRESA,
+    E.ANO_FUNDACAO,
+    S.NOME AS SETOR,
+    S.DESCRICAO
+FROM EMPRESAS E
+JOIN SETORES S
+    ON E.ID_SETOR = S.ID_SETOR;
+
+
+
+-- =====================================================
+-- VIEW 3
+-- Produtos e serviços oferecidos pelas empresas
+-- =====================================================
+
+CREATE OR REPLACE VIEW VW_PRODUTOS_EMPRESAS AS
+SELECT
+    E.NOME AS EMPRESA,
+    P.NOME AS PRODUTO_SERVICO,
+    P.TIPO
+FROM EMPRESAS E
+JOIN PRODUTOS_SERVICOS P
+    ON E.ID_EMPRESA = P.ID_EMPRESA;
+
+
+
+-- =====================================================
+-- VIEW 4
+-- Empresas que receberam prêmios
+-- =====================================================
+
+CREATE OR REPLACE VIEW VW_EMPRESAS_PREMIADAS AS
+SELECT
+    E.NOME AS EMPRESA,
+    E.ANO_FUNDACAO,
+    PR.NOME AS PREMIO,
+    PR.ANO AS ANO_PREMIO,
+    PR.ORGANIZACAO
+FROM EMPRESAS E
+JOIN EMPRESA_PREMIO EP
+    ON E.ID_EMPRESA = EP.ID_EMPRESA
+JOIN PREMIOS PR
+    ON EP.ID_PREMIO = PR.ID_PREMIO;
+
+
+
+-- =====================================================
+-- VIEW 5
+-- Empresas mais antigas cadastradas
+-- =====================================================
+
+CREATE OR REPLACE VIEW VW_EMPRESAS_ANTIGAS AS
+SELECT
+    NOME,
+    ANO_FUNDACAO,
+    FUNDADOR,
+    STATUS
+FROM EMPRESAS
+WHERE ANO_FUNDACAO < 1500
+ORDER BY ANO_FUNDACAO;
+
+
+
+-- =====================================================
+-- VIEW 6
+-- Quantidade de empresas por país
+-- =====================================================
+
+CREATE OR REPLACE VIEW VW_QUANTIDADE_EMPRESAS_PAIS AS
+SELECT
+    P.NOME AS PAIS,
+    COUNT(E.ID_EMPRESA) AS TOTAL_EMPRESAS
+FROM PAISES P
+JOIN CIDADES C
+    ON P.ID_PAIS = C.ID_PAIS
+JOIN EMPRESAS E
+    ON C.ID_CIDADE = E.ID_CIDADE
+GROUP BY P.NOME;
+
+
+
+-- =====================================================
+-- VIEW 7
+-- Quantidade de empresas por setor
+-- =====================================================
+
+CREATE OR REPLACE VIEW VW_EMPRESAS_SETOR_TOTAL AS
+SELECT
+    S.NOME AS SETOR,
+    COUNT(E.ID_EMPRESA) AS TOTAL
+FROM SETORES S
+JOIN EMPRESAS E
+    ON S.ID_SETOR = E.ID_SETOR
+GROUP BY S.NOME;
+
+
+
+-- =====================================================
+-- VIEW 8
+-- Informações completas do banco
+-- =====================================================
+
+CREATE OR REPLACE VIEW VW_RELATORIO_COMPLETO AS
+SELECT
+    E.NOME AS EMPRESA,
+    E.ANO_FUNDACAO,
+    E.FUNDADOR,
+    S.NOME AS SETOR,
+    C.NOME AS CIDADE,
+    P.NOME AS PAIS,
+    CONT.NOME AS CONTINENTE
+FROM EMPRESAS E
+JOIN SETORES S
+    ON E.ID_SETOR = S.ID_SETOR
+JOIN CIDADES C
+    ON E.ID_CIDADE = C.ID_CIDADE
+JOIN PAISES P
+    ON C.ID_PAIS = P.ID_PAIS
+JOIN CONTINENTES CONT
+    ON P.ID_CONTINENTE = CONT.ID_CONTINENTE;
+
+
+
+COMMIT;
