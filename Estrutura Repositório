@@ -4,7 +4,7 @@ oracle-sql-historic-companies/
 ├── LICENSE
 ├── .gitignore
 │
-├── sql/
+├── database/
 │   ├── 01_create_tables.sql
 │   ├── 02_insert_continentes.sql
 │   ├── 03_insert_paises.sql
@@ -18,12 +18,13 @@ oracle-sql-historic-companies/
 │   ├── 11_procedures.sql
 │   ├── 12_functions.sql
 │   ├── 13_triggers.sql
-│   └── 14_consultas.sql
+│   └── 14_queries.sql
 │
 ├── docs/
 │   ├── DER.png
-│   ├── ModeloRelacional.png
-│   └── Projeto.pdf
+│   ├── Modelo_Relacional.pdf
+│   └── Projeto_Oracle_SQL.pdf
 │
 └── images/
+    ├── logo.png
     └── banco.png
