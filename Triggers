@@ -1,0 +1,227 @@
+
+   TRIGGERS DO PROJETO
+   Banco de Dados: Empresas Mais Antigas do Mundo
+   Oracle SQL / PL-SQL
+
+
+
+-- =====================================================
+-- TRIGGER 1
+-- Impedir ano de fundação futuro
+-- =====================================================
+
+CREATE OR REPLACE TRIGGER TG_VALIDAR_ANO_FUNDACAO
+BEFORE INSERT OR UPDATE ON EMPRESAS
+FOR EACH ROW
+
+BEGIN
+
+    IF :NEW.ANO_FUNDACAO > EXTRACT(YEAR FROM SYSDATE) THEN
+
+        RAISE_APPLICATION_ERROR(
+            -20001,
+            'O ano de fundação não pode ser maior que o ano atual.'
+        );
+
+    END IF;
+
+END;
+/
+
+-- =====================================================
+-- TRIGGER 2
+-- Converter nome da empresa para letras maiúsculas
+-- =====================================================
+
+CREATE OR REPLACE TRIGGER TG_NOME_EMPRESA_MAIUSCULO
+BEFORE INSERT OR UPDATE ON EMPRESAS
+FOR EACH ROW
+
+BEGIN
+
+    :NEW.NOME := UPPER(:NEW.NOME);
+
+END;
+/
+
+-- =====================================================
+-- TRIGGER 3
+-- Registrar alterações realizadas nas empresas
+-- =====================================================
+
+
+CREATE TABLE HISTORICO_EMPRESAS
+(
+    ID_HISTORICO NUMBER PRIMARY KEY,
+    ID_EMPRESA NUMBER,
+    OPERACAO VARCHAR2(20),
+    DATA_ALTERACAO DATE
+);
+
+
+CREATE SEQUENCE SEQ_HIST_EMPRESA
+START WITH 1
+INCREMENT BY 1;
+
+
+
+CREATE OR REPLACE TRIGGER TG_LOG_EMPRESAS
+AFTER INSERT OR UPDATE OR DELETE ON EMPRESAS
+FOR EACH ROW
+
+BEGIN
+
+
+    IF INSERTING THEN
+
+        INSERT INTO HISTORICO_EMPRESAS
+        VALUES
+        (
+            SEQ_HIST_EMPRESA.NEXTVAL,
+            :NEW.ID_EMPRESA,
+            'INSERT',
+            SYSDATE
+        );
+
+
+    ELSIF UPDATING THEN
+
+        INSERT INTO HISTORICO_EMPRESAS
+        VALUES
+        (
+            SEQ_HIST_EMPRESA.NEXTVAL,
+            :NEW.ID_EMPRESA,
+            'UPDATE',
+            SYSDATE
+        );
+
+
+    ELSIF DELETING THEN
+
+        INSERT INTO HISTORICO_EMPRESAS
+        VALUES
+        (
+            SEQ_HIST_EMPRESA.NEXTVAL,
+            :OLD.ID_EMPRESA,
+            'DELETE',
+            SYSDATE
+        );
+
+
+    END IF;
+
+
+END;
+/
+
+-- =====================================================
+-- TRIGGER 4
+-- Impedir exclusão de empresas premiadas
+-- =====================================================
+
+CREATE OR REPLACE TRIGGER TG_BLOQUEAR_EMPRESA_PREMIADA
+BEFORE DELETE ON EMPRESAS
+FOR EACH ROW
+
+DECLARE
+
+    V_TOTAL NUMBER;
+
+BEGIN
+
+    SELECT COUNT(*)
+    INTO V_TOTAL
+    FROM EMPRESA_PREMIO
+    WHERE ID_EMPRESA = :OLD.ID_EMPRESA;
+
+
+    IF V_TOTAL > 0 THEN
+
+        RAISE_APPLICATION_ERROR(
+            -20002,
+            'Não é possível excluir uma empresa que possui prêmios cadastrados.'
+        );
+
+    END IF;
+
+
+END;
+/
+
+-- =====================================================
+-- TRIGGER 5
+-- Criar código automático de empresa
+-- =====================================================
+
+
+CREATE SEQUENCE SEQ_EMPRESA
+START WITH 36
+INCREMENT BY 1;
+
+
+
+CREATE OR REPLACE TRIGGER TG_ID_EMPRESA_AUTOMATICO
+BEFORE INSERT ON EMPRESAS
+FOR EACH ROW
+
+BEGIN
+
+
+    IF :NEW.ID_EMPRESA IS NULL THEN
+
+        :NEW.ID_EMPRESA := SEQ_EMPRESA.NEXTVAL;
+
+    END IF;
+
+
+END;
+/
+
+-- =====================================================
+-- TRIGGER 6
+-- Atualizar status automaticamente para empresas antigas
+-- =====================================================
+
+CREATE OR REPLACE TRIGGER TG_STATUS_HISTORICO
+BEFORE INSERT ON EMPRESAS
+FOR EACH ROW
+
+BEGIN
+
+
+    IF (EXTRACT(YEAR FROM SYSDATE) - :NEW.ANO_FUNDACAO) >= 100 THEN
+
+        :NEW.STATUS := 'Histórica';
+
+    END IF;
+
+
+END;
+/
+
+-- =====================================================
+-- TRIGGER 7
+-- Impedir quantidade negativa de funcionários
+-- =====================================================
+
+CREATE OR REPLACE TRIGGER TG_VALIDAR_FUNCIONARIOS
+BEFORE INSERT OR UPDATE ON EMPRESAS
+FOR EACH ROW
+
+BEGIN
+
+
+    IF :NEW.FUNCIONARIOS < 0 THEN
+
+
+        RAISE_APPLICATION_ERROR(
+            -20003,
+            'A quantidade de funcionários não pode ser negativa.'
+        );
+
+
+    END IF;
+
+
+END;
+/
