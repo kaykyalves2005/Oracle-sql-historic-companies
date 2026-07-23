@@ -1,0 +1,71 @@
+INSERT INTO EMPRESAS VALUES (1,'Kongō Gumi',578,'Shigemitsu Kongo','Ativa',100,'www.kongogumi.co.jp','Empresa de construção mais antiga do mundo.',1,1);
+
+INSERT INTO EMPRESAS VALUES (2,'Nishiyama Onsen Keiunkan',705,'Fujiwara Mahito','Ativa',150,'www.keiunkan.co.jp','Hotel tradicional japonês considerado o mais antigo em funcionamento.',2,2);
+
+INSERT INTO EMPRESAS VALUES (3,'Hōshi Ryokan',718,'Taicho Daishi','Ativa',120,'www.ho-shi.co.jp','Hotel tradicional japonês administrado pela mesma família por séculos.',3,2);
+
+INSERT INTO EMPRESAS VALUES (4,'St. Peter Stiftskulinarium',803,'Mosteiro de São Pedro','Ativa',80,'www.stpeter.at','Um dos restaurantes mais antigos do mundo.',4,3);
+
+INSERT INTO EMPRESAS VALUES (5,'Staffelter Hof',862,'Família Schneiders','Ativa',60,'www.staffelter-hof.de','Vinícola familiar alemã.',5,4);
+
+INSERT INTO EMPRESAS VALUES (6,'Monnaie de Paris',864,'Rei Carlos II','Ativa',500,'www.monnaiedeparis.fr','Casa da moeda oficial francesa.',6,5);
+
+INSERT INTO EMPRESAS VALUES (7,'Sean''s Bar',900,'Desconhecido','Ativa',25,'www.seansbar.ie','Pub mais antigo da Irlanda.',7,3);
+
+INSERT INTO EMPRESAS VALUES (8,'Tanaka-Iga',885,'Família Tanaka','Ativa',40,'www.tanakaiga.jp','Empresa japonesa de comércio tradicional.',8,6);
+
+INSERT INTO EMPRESAS VALUES (9,'Royal Mint',886,'Alfredo, o Grande','Ativa',900,'www.royalmint.com','Casa da moeda do Reino Unido.',9,5);
+
+INSERT INTO EMPRESAS VALUES (10,'Château de Goulaine',1000,'Família Goulaine','Ativa',70,'www.goulaine.fr','Produtora tradicional de vinhos.',10,4);
+
+INSERT INTO EMPRESAS VALUES (11,'Marinelli Bell Foundry',1040,'Família Marinelli','Ativa',50,'www.marinelli.com','Fundição de sinos mais antiga da Itália.',11,7);
+
+INSERT INTO EMPRESAS VALUES (12,'Sudo Honke',1141,'Família Sudo','Ativa',85,'www.sudohonke.co.jp','Produtora de saquê.',12,8);
+
+INSERT INTO EMPRESAS VALUES (13,'Tsuen Tea',1160,'Família Tsuen','Ativa',40,'www.tsuentea.com','Casa de chá mais antiga do Japão.',13,8);
+
+INSERT INTO EMPRESAS VALUES (14,'Richard de Bas',1326,'Família Richard','Ativa',55,'www.richarddebas.fr','Fábrica tradicional de papel.',14,9);
+
+INSERT INTO EMPRESAS VALUES (15,'Banco Monte dei Paschi di Siena',1472,'Magistratura de Siena','Ativa',21000,'www.mps.it','Banco mais antigo em operação contínua.',15,10);
+
+INSERT INTO EMPRESAS VALUES (16,'Beretta',1526,'Bartolomeo Beretta','Ativa',6800,'www.beretta.com','Fabricante italiana tradicional.',16,7);
+
+INSERT INTO EMPRESAS VALUES (17,'Cambridge University Press',1534,'Universidade de Cambridge','Ativa',5000,'www.cambridge.org','Editora universitária.',17,11);
+
+INSERT INTO EMPRESAS VALUES (18,'Zildjian',1623,'Avedis Zildjian','Ativa',900,'www.zildjian.com','Fabricante de pratos musicais.',18,12);
+
+INSERT INTO EMPRESAS VALUES (19,'Shirakiya',1662,'Família Shirakiya','Ativa',300,'www.shirakiya.jp','Tradicional empresa comercial japonesa.',19,6);
+
+INSERT INTO EMPRESAS VALUES (20,'Twinings',1706,'Thomas Twining','Ativa',2200,'www.twinings.co.uk','Fabricante britânica de chás.',20,8);
+
+INSERT INTO EMPRESAS VALUES (21,'Faber-Castell',1761,'Kaspar Faber','Ativa',8000,'www.faber-castell.com','Fabricante de lápis e papelaria.',21,9);
+
+INSERT INTO EMPRESAS VALUES (22,'Baccarat',1764,'Rei Luís XV','Ativa',1200,'www.baccarat.com','Fabricante francesa de cristais.',22,13);
+
+INSERT INTO EMPRESAS VALUES (23,'Veuve Clicquot',1772,'Philippe Clicquot','Ativa',5200,'www.veuveclicquot.com','Produtora de champanhe.',23,8);
+
+INSERT INTO EMPRESAS VALUES (24,'Colgate',1806,'William Colgate','Ativa',34000,'www.colgate.com','Produtos de higiene.',24,14);
+
+INSERT INTO EMPRESAS VALUES (25,'Brooks Brothers',1818,'Henry Sands Brooks','Ativa',4000,'www.brooksbrothers.com','Marca tradicional de roupas.',25,15);
+
+INSERT INTO EMPRESAS VALUES (26,'Levi Strauss and Co.',1853,'Levi Strauss','Ativa',19500,'www.levi.com','Fabricante americana de jeans, roupas e acessórios.',26,15);
+
+INSERT INTO EMPRESAS VALUES (27,'Nokia',1865,'Fredrik Idestam','Ativa',86000,'www.nokia.com','Empresa finlandesa de tecnologia.',27,16);
+
+INSERT INTO EMPRESAS VALUES (28,'Michelin',1889,'Irmãos Michelin','Ativa',132000,'www.michelin.com','Fabricante de pneus.',28,17);
+
+INSERT INTO EMPRESAS VALUES (29,'Nintendo',1889,'Fusajiro Yamauchi','Ativa',7700,'www.nintendo.com','Empresa japonesa de jogos.',29,18);
+
+INSERT INTO EMPRESAS VALUES (30,'Coca-Cola',1892,'John Pemberton','Ativa',80000,'www.coca-colacompany.com','Fabricante de bebidas.',30,8);
+
+INSERT INTO EMPRESAS VALUES (31,'Swarovski',1895,'Daniel Swarovski','Ativa',18000,'www.swarovski.com','Cristais e joias.',31,13);
+
+INSERT INTO EMPRESAS VALUES (32,'Ford Motor Company',1903,'Henry Ford','Ativa',177000,'www.ford.com','Fabricante de automóveis.',32,19);
+
+INSERT INTO EMPRESAS VALUES (33,'Harley-Davidson',1903,'William Harley','Ativa',5500,'www.harley-davidson.com','Fabricante de motocicletas.',33,19);
+
+INSERT INTO EMPRESAS VALUES (34,'Rolex',1905,'Hans Wilsdorf','Ativa',30000,'www.rolex.com','Fabricante suíça de relógios.',34,20);
+
+INSERT INTO EMPRESAS VALUES (35,'IBM',1911,'Charles Ranlett Flint','Ativa',282000,'www.ibm.com','Tecnologia da informação.',35,16);
+
+COMMIT;
