@@ -1,0 +1,11 @@
+INSERT INTO PAISES VALUES (1,'Japão','Tóquio','Iene',1);
+INSERT INTO PAISES VALUES (2,'Alemanha','Berlim','Euro',2);
+INSERT INTO PAISES VALUES (3,'França','Paris','Euro',2);
+INSERT INTO PAISES VALUES (4,'Irlanda','Dublin','Euro',2);
+INSERT INTO PAISES VALUES (5,'Itália','Roma','Euro',2);
+INSERT INTO PAISES VALUES (6,'Áustria','Viena','Euro',2);
+INSERT INTO PAISES VALUES (7,'Reino Unido','Londres','Libra Esterlina',2);
+INSERT INTO PAISES VALUES (8,'Turquia','Ancara','Lira Turca',2);
+INSERT INTO PAISES VALUES (9,'Estados Unidos','Washington','Dólar',3);
+INSERT INTO PAISES VALUES (10,'Finlândia','Helsinque','Euro',2);
+INSERT INTO PAISES VALUES (11,'Suíça','Berna','Franco Suíço',2);
